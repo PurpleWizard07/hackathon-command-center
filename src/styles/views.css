@@ -64,6 +64,20 @@
   font-variant-numeric: tabular-nums;
 }
 
+.topbar__signout {
+  font-family: inherit;
+  font-size: inherit;
+  color: var(--text-tertiary);
+  text-decoration: underline;
+  text-decoration-color: var(--border-strong);
+  text-underline-offset: 3px;
+  transition: color var(--dur-fast) var(--ease-out);
+}
+
+.topbar__signout:hover {
+  color: var(--text-primary);
+}
+
 .page {
   flex: 1;
   width: 100%;
@@ -1248,6 +1262,37 @@
   background: var(--accent-wash);
   font-size: var(--fs-sm);
   flex-wrap: wrap;
+}
+
+.auth-screen {
+  display: grid;
+  place-items: center;
+  min-height: 100vh;
+  padding: var(--gutter);
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 380px;
+}
+
+.auth-card__body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-6);
+}
+
+.auth-card__title {
+  font-size: var(--fs-title);
+  font-weight: 600;
+  letter-spacing: var(--tracking-title);
+  margin-bottom: var(--sp-3);
+}
+
+.auth-card__form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-5);
 }
 
 .error-state {

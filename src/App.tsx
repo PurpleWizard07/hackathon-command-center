@@ -1,5 +1,6 @@
 import { Link, Navigate, Route, Routes } from 'react-router-dom'
 import { StoreProvider, useStore } from '@/store/StoreProvider'
+import { AuthProvider, useAuth } from '@/store/AuthProvider'
 import { ToastProvider } from '@/components/ui'
 import { formatClock, timeZoneLabel } from '@/lib/time'
 import { Dashboard } from '@/features/Dashboard'
@@ -9,10 +10,27 @@ import { Submission } from '@/features/Submission'
 import { Tasks } from '@/features/Tasks'
 import { Assets } from '@/features/Assets'
 import { Settings } from '@/features/Settings'
+import { SignIn } from '@/features/SignIn'
 
 export default function App() {
   return (
-    <StoreProvider>
+    <AuthProvider>
+      <AuthGate />
+    </AuthProvider>
+  )
+}
+
+/** Local-only mode skips this entirely and always renders the app. In cloud
+ *  mode, keying StoreProvider by email forces a clean remount - and a fresh
+ *  `repository.load()` - whenever the signed-in user changes. */
+function AuthGate() {
+  const { cloud, status, email } = useAuth()
+
+  if (cloud && status === 'checking') return null
+  if (cloud && status === 'signed-out') return <SignIn />
+
+  return (
+    <StoreProvider key={email ?? 'local'}>
       <ToastProvider>
         <div className="shell">
           <TopBar />
@@ -35,6 +53,7 @@ export default function App() {
 
 function TopBar() {
   const { now, data } = useStore()
+  const { cloud, email, signOut } = useAuth()
   const zone = timeZoneLabel()
   return (
     <header className="topbar">
@@ -53,6 +72,17 @@ function TopBar() {
         <span>
           {formatClock(new Date(now))} {zone}
         </span>
+        {cloud && (
+          <>
+            <span aria-hidden="true" style={{ color: 'var(--text-quaternary)' }}>
+              ·
+            </span>
+            <span>{email}</span>
+            <button type="button" className="topbar__signout" onClick={() => void signOut()}>
+              Sign out
+            </button>
+          </>
+        )}
       </span>
     </header>
   )

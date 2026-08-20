@@ -19,7 +19,7 @@ import type {
   SubmissionItem,
   Task,
 } from '@/types'
-import { DATA_VERSION } from './repository'
+import { DATA_VERSION } from './model'
 import { GROUP_2 } from './seed-groups'
 import { GROUP_3 } from './seed-groups-2'
 import type { Spec } from './seed-types'

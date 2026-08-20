@@ -2,55 +2,25 @@
    Persistence boundary.
 
    The UI talks to `Repository` and nothing else. Today it is backed by
-   localStorage; swapping in a REST or SQL backend means writing a second
-   implementation of this interface - no component changes.
+   localStorage, or by Supabase when `VITE_SUPABASE_URL`/`VITE_SUPABASE_ANON_KEY`
+   are set (see supabaseRepository.ts) - no component changes either way.
    ========================================================================== */
 
 import type { CommandCenterData } from '@/types'
 import { buildSeedData } from './seed'
+import { isSupabaseConfigured } from '@/lib/supabaseClient'
+import { DATA_VERSION, emptyData, normalize } from './model'
+import { SupabaseRepository } from './supabaseRepository'
 
-export const DATA_VERSION = 1
-const STORAGE_KEY = 'hcc:data:v1'
+export { DATA_VERSION, emptyData } from './model'
+
+const STORAGE_KEY = `hcc:data:v${DATA_VERSION}`
 
 export interface Repository {
   load(): Promise<CommandCenterData>
   save(data: CommandCenterData): Promise<void>
   reset(): Promise<CommandCenterData>
   clear(): Promise<CommandCenterData>
-}
-
-export function emptyData(): CommandCenterData {
-  return {
-    version: DATA_VERSION,
-    hackathons: [],
-    requirements: [],
-    criteria: [],
-    links: [],
-    submissionItems: [],
-    tasks: [],
-    assets: [],
-  }
-}
-
-/** Defensive normalisation: a hand-edited or partially-migrated payload must
- *  never be able to crash the app on boot. */
-function normalize(input: unknown): CommandCenterData | null {
-  if (!input || typeof input !== 'object') return null
-  const raw = input as Partial<CommandCenterData>
-  if (!Array.isArray(raw.hackathons)) return null
-  const base = emptyData()
-  return {
-    version: DATA_VERSION,
-    hackathons: raw.hackathons ?? [],
-    requirements: Array.isArray(raw.requirements) ? raw.requirements : base.requirements,
-    criteria: Array.isArray(raw.criteria) ? raw.criteria : base.criteria,
-    links: Array.isArray(raw.links) ? raw.links : base.links,
-    submissionItems: Array.isArray(raw.submissionItems)
-      ? raw.submissionItems
-      : base.submissionItems,
-    tasks: Array.isArray(raw.tasks) ? raw.tasks : base.tasks,
-    assets: Array.isArray(raw.assets) ? raw.assets : base.assets,
-  }
 }
 
 class LocalStorageRepository implements Repository {
@@ -130,4 +100,6 @@ function clone<T>(value: T): T {
     : (JSON.parse(JSON.stringify(value)) as T)
 }
 
-export const repository: Repository = new LocalStorageRepository()
+export const repository: Repository = isSupabaseConfigured
+  ? new SupabaseRepository()
+  : new LocalStorageRepository()

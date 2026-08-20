@@ -3,6 +3,9 @@ import react from '@vitejs/plugin-react'
 import { fileURLToPath, URL } from 'node:url'
 
 export default defineConfig({
+  // Relative asset paths so the production build also works opened directly
+  // as a file:// URL, with no server involved.
+  base: './',
   plugins: [react()],
   resolve: {
     alias: { '@': fileURLToPath(new URL('./src', import.meta.url)) },
