@@ -1,0 +1,151 @@
+/* ============================================================================
+   Design tokens — the single source of truth for the entire interface.
+   Dark-first. Every value here is intentional; components never hardcode color.
+   ========================================================================== */
+
+:root {
+  /* ---- Typography ------------------------------------------------------- */
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    'Helvetica Neue', Arial, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, 'SF Mono', Menlo,
+    Consolas, monospace;
+
+  --fs-display: 2.125rem;  /* 34px — dashboard hero */
+  --fs-title: 1.375rem;    /* 22px — page titles */
+  --fs-h2: 1rem;           /* 16px — section titles */
+  --fs-h3: 0.875rem;       /* 14px — card titles */
+  --fs-body: 0.875rem;     /* 14px — body copy */
+  --fs-sm: 0.8125rem;      /* 13px — dense body */
+  --fs-label: 0.75rem;     /* 12px — form labels, metadata */
+  --fs-micro: 0.6875rem;   /* 11px — instrument labels */
+  --fs-nano: 0.625rem;     /* 10px — micro caps */
+
+  --lh-tight: 1.15;
+  --lh-snug: 1.35;
+  --lh-normal: 1.55;
+  --lh-relaxed: 1.7;
+
+  --tracking-display: -0.022em;
+  --tracking-title: -0.016em;
+  --tracking-tight: -0.008em;
+  --tracking-caps: 0.08em;
+  --tracking-caps-wide: 0.12em;
+
+  /* ---- Surfaces (near-black, cool-neutral ramp) ------------------------- */
+  --bg-canvas: #08090a;
+  --bg-canvas-deep: #050506;
+  --bg-surface: #0c0d10;
+  --bg-raised: #101216;
+  --bg-overlay: #14161a;
+  --bg-inset: #0a0b0d;
+  --bg-hover: rgba(255, 255, 255, 0.032);
+  --bg-active: rgba(255, 255, 255, 0.055);
+  --bg-selected: rgba(125, 140, 255, 0.09);
+  --bg-scrim: rgba(4, 4, 6, 0.72);
+
+  /* ---- Borders (hairlines carry the structure) ------------------------- */
+  --border-subtle: rgba(255, 255, 255, 0.055);
+  --border-default: rgba(255, 255, 255, 0.085);
+  --border-strong: rgba(255, 255, 255, 0.14);
+  --border-accent: rgba(125, 140, 255, 0.42);
+
+  /* ---- Text ------------------------------------------------------------ */
+  --text-primary: #f2f3f5;
+  --text-secondary: #9ba0aa;
+  --text-tertiary: #6d727c;
+  --text-quaternary: #4b5057;
+  --text-inverse: #08090a;
+
+  /* ---- Accent (periwinkle — selection, focus, primary action) ---------- */
+  --accent: #7d8cff;
+  --accent-bright: #98a4ff;
+  --accent-dim: #5d69cc;
+  --accent-wash: rgba(125, 140, 255, 0.12);
+  --accent-wash-strong: rgba(125, 140, 255, 0.2);
+  --accent-contrast: #060713;
+
+  /* ---- Semantic -------------------------------------------------------- */
+  --success: #3fbf80;
+  --success-bright: #5ed69a;
+  --success-wash: rgba(63, 191, 128, 0.12);
+  --success-border: rgba(63, 191, 128, 0.28);
+
+  --warn: #e0a13a;
+  --warn-bright: #f0b755;
+  --warn-wash: rgba(224, 161, 58, 0.12);
+  --warn-border: rgba(224, 161, 58, 0.28);
+
+  --danger: #f0555f;
+  --danger-bright: #ff7078;
+  --danger-wash: rgba(240, 85, 95, 0.12);
+  --danger-border: rgba(240, 85, 95, 0.3);
+
+  --neutral-wash: rgba(255, 255, 255, 0.06);
+  --neutral-border: rgba(255, 255, 255, 0.12);
+
+  /* ---- Spacing (4px base) ---------------------------------------------- */
+  --sp-1: 0.25rem;
+  --sp-2: 0.375rem;
+  --sp-3: 0.5rem;
+  --sp-4: 0.75rem;
+  --sp-5: 1rem;
+  --sp-6: 1.25rem;
+  --sp-7: 1.5rem;
+  --sp-8: 2rem;
+  --sp-9: 2.5rem;
+  --sp-10: 3rem;
+  --sp-11: 4rem;
+  --sp-12: 5rem;
+
+  /* ---- Radii (restrained — no pill-shaped cards) ----------------------- */
+  --r-xs: 4px;
+  --r-sm: 6px;
+  --r-md: 8px;
+  --r-lg: 10px;
+  --r-xl: 14px;
+  --r-full: 999px;
+
+  /* ---- Elevation (shadow + 1px inner top highlight = "machined" feel) -- */
+  --sheen: inset 0 1px 0 rgba(255, 255, 255, 0.045);
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.35), 0 2px 6px -2px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 2px 4px rgba(0, 0, 0, 0.3), 0 8px 20px -6px rgba(0, 0, 0, 0.5);
+  --shadow-lg: 0 4px 8px rgba(0, 0, 0, 0.34), 0 20px 44px -12px rgba(0, 0, 0, 0.66);
+  --shadow-xl: 0 8px 16px rgba(0, 0, 0, 0.4), 0 32px 72px -16px rgba(0, 0, 0, 0.75);
+  --ring: 0 0 0 2px var(--bg-canvas), 0 0 0 4px var(--accent-wash-strong);
+
+  /* ---- Motion ---------------------------------------------------------- */
+  --dur-instant: 90ms;
+  --dur-fast: 140ms;
+  --dur-base: 200ms;
+  --dur-slow: 300ms;
+  --dur-slower: 460ms;
+  --ease-out: cubic-bezier(0.22, 0.9, 0.28, 1);
+  --ease-in-out: cubic-bezier(0.5, 0, 0.3, 1);
+  --ease-spring: cubic-bezier(0.2, 1.12, 0.34, 1);
+
+  /* ---- Layout ---------------------------------------------------------- */
+  --shell-max: 1560px;
+  --rail-w: 252px;
+  --topbar-h: 56px;
+  --gutter: 2rem;
+  --z-sticky: 20;
+  --z-rail: 40;
+  --z-overlay: 60;
+  --z-toast: 80;
+}
+
+@media (max-width: 1080px) {
+  :root {
+    --gutter: 1.5rem;
+    --fs-display: 1.875rem;
+  }
+}
+
+@media (max-width: 640px) {
+  :root {
+    --gutter: 1.125rem;
+    --fs-display: 1.625rem;
+    --fs-title: 1.25rem;
+  }
+}
